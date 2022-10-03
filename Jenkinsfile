@@ -24,60 +24,26 @@ pipeline {
         }
         stage('build-frontend') {
             steps {
-                sh 'pwd'
                 dir('./src/frontend') {
                     sh "pwd"
                     sh 'node --version'
                     sh 'npm cache clean --force'
                     sh 'npm install'
-                    sh 'npx update-browserslist-db@latest'
                     sh 'npm run build'
                 }
             }
         }
         stage('build-backend') {
             steps {
-                sh 'pwd'
                 dir('./src/backend') {
                     sh "pwd"
                     sh 'npm install'
                 }
             }
         }
-        stage('test-frontend') {
+        stage('Test') {
             steps {
-                sh 'pwd'
-                dir('./src/frontend') {
-                    sh 'npm install'
-                    sh 'npm run test'
-                }
-            }
-        }
-        stage('test-backend') {
-            steps {
-                sh 'pwd'
-                dir('./src/backend') {
-                    sh 'npm install'
-                    sh 'npm run test'
-                }
-            }
-        }
-        stage('scan-frontend') {
-            steps {
-                sh 'pwd'
-                dir('./src/frontend') {
-                    sh 'npm install'
-                    sh 'npm audit fix --audit-level=critical --force'
-                }
-            }
-        }
-        stage('sacn-backend') {
-            steps {
-                sh 'pwd'
-                dir('./src/backend') {
-                    sh 'npm install'
-                    sh 'npm audit fix --audit-level=critical --force'
-                }
+                sh './jenkins/scripts/test.sh'
             }
         }
         stage('Linting') {
