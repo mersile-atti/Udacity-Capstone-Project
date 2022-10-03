@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('build-frontend') {
             steps {
                 sh 'pwd'
                 dir('./src/frontend') {
@@ -30,6 +30,16 @@ pipeline {
                 }
                 sh 'node --version'
                 sh 'npx browserslist@latest --update-db'
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+        stage('build-backend') {
+            steps {
+                sh 'pwd'
+                dir('./src/backend') {
+                    sh "pwd"
+                }
                 sh 'npm install'
                 sh 'npm run build'
             }
