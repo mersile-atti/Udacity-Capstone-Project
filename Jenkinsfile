@@ -29,8 +29,8 @@ pipeline {
                     sh "pwd"
                     sh 'node --version'
                     sh 'npm cache clean --force'
-                    sh 'npx update-browserslist-db@latest'
                     sh 'npm install'
+                    sh 'npx update-browserslist-db@latest'
                     sh 'npm run build'
                 }
             }
