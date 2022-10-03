@@ -42,9 +42,40 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('test-frontend') {
             steps {
-                sh './jenkins/scripts/test.sh'
+                sh 'pwd'
+                dir('./src/frontend') {
+                    sh 'npm install'
+                    sh 'npm run test'
+                }
+            }
+        }
+        stage('test-backend') {
+            steps {
+                sh 'pwd'
+                dir('./src/backend') {
+                    sh 'npm install'
+                    sh 'npm run test'
+                }
+            }
+        }
+        stage('scan-frontend') {
+            steps {
+                sh 'pwd'
+                dir('./src/frontend') {
+                    sh 'npm install'
+                    sh 'npm audit fix --audit-level=critical --force'
+                }
+            }
+        }
+        stage('sacn-backend') {
+            steps {
+                sh 'pwd'
+                dir('./src/backend') {
+                    sh 'npm install'
+                    sh 'npm audit fix --audit-level=critical --force'
+                }
             }
         }
         stage('Linting') {
