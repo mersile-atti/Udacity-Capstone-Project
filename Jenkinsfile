@@ -27,10 +27,10 @@ pipeline {
                 sh 'pwd'
                 dir('./src/frontend') {
                     sh "pwd"
-                }
-                sh 'node --version'
+                    sh 'node --version'
                 sh 'npm install'
                 sh 'npm run build'
+                }
             }
         }
         stage('build-backend') {
@@ -38,9 +38,9 @@ pipeline {
                 sh 'pwd'
                 dir('./src/backend') {
                     sh "pwd"
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
-                sh 'npm install'
-                sh 'npm run build'
             }
         }
         stage('Test') {
