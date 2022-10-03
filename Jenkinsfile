@@ -39,7 +39,6 @@ pipeline {
                 dir('./src/backend') {
                     sh "pwd"
                     sh 'npm install'
-                    sh 'npm run build'
                 }
             }
         }
