@@ -28,8 +28,9 @@ pipeline {
                 dir('./src/frontend') {
                     sh "pwd"
                     sh 'node --version'
-                sh 'npm install'
-                sh 'npm run build'
+                    sh 'npx update-browserslist-db@latest'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
