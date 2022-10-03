@@ -29,7 +29,6 @@ pipeline {
                     sh "pwd"
                 }
                 sh 'node --version'
-                sh 'npx browserslist@latest --update-db'
                 sh 'npm install'
                 sh 'npm run build'
             }
