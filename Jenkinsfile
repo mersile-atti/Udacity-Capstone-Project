@@ -48,5 +48,15 @@ pipeline {
                 sh 'make lint'
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+            
+            sh '''
+                docker build -t mersileatti/devopscapstone:$BUILD_ID .
+            '''
+                }
+            }
+        }
     }
 }
