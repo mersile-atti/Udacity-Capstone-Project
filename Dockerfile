@@ -1,7 +1,8 @@
 FROM node:lts-alpine
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package*.json ./
+COPY package-lock.json ./
+COPY ./ ./
 RUN npm install
-COPY . .
 EXPOSE 8000
-CMD [ "npm", "start" ]
+CMD ["npm", "run", "start"]
