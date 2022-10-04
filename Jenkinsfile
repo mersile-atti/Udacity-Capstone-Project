@@ -1,12 +1,10 @@
 pipeline {
     agent {
-        any {
-            args '-p 3000:3000 -p 5000:5000' 
-        }
         dockerfile {
             filename 'Dockerfile.jenkinsAgent'
             additionalBuildArgs  '--build-arg JENKINSUID=`id -u jenkins` --build-arg JENKINSGID=`id -g jenkins` --build-arg DOCKERGID=`stat -c %g /var/run/docker.sock`'
             args '-v /var/run/docker.sock:/var/run/docker.sock -u jenkins:docker'
+            args '-p 3000:3000 -p 5000:5000' 
         }
     }
     environment {
