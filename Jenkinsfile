@@ -55,6 +55,7 @@ pipeline {
             sh '''
                 docker build -t mersileatti/devopscapstone:$BUILD_ID .
             '''
+            sh 'docker image ls'
                 }
             }
         }
