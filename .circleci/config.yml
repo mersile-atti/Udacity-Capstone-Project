@@ -58,7 +58,29 @@ jobs:
         - save_cache:
             paths: [backend/node_modules]
             key: backend-build
-  
+    build-&-upload-docker-image:
+      docker:
+            # Use the same Docker base as the project 
+        - image: docker:17.05.0-ce-git
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 20.10.14
+            docker_layer_caching: true
+            # run lint!
+          - run:
+              name: Build docker container
+              command: |
+                docker build --tag=$DOCKER_IMAGE_NAME . --no-cache
+                docker image ls
+          - run:
+              name: Upload Docker to Dockerhub
+              command: |
+                echo "Docker ID and Image: $DOCKER_IMAGE_NAME"
+                docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
+                docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
+                docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
+
 workflows:
   default:
     jobs:
@@ -68,3 +90,4 @@ workflows:
           trusted-registries: 'docker.io,my-company.com:5000'
       - build-frontend
       - build-backend
+      - build-&-upload-docker-image
