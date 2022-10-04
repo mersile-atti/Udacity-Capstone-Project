@@ -6,7 +6,9 @@ pipeline {
     }
     environment {
         CI = 'true'
+        registry = 'mersileatti/devopscapstone'
         dockerHubCredentials = 'dockerHub'
+        dockerImage = ''
     }
     stages {
         stage('Start pipleine') {
