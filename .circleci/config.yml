@@ -1,0 +1,35 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@2.0.3  
+  aws-eks: circleci/aws-eks@1.1.0
+  kubernetes: circleci/kubernetes@1.3.0
+
+jobs:
+    lint:
+        docker:
+            # Use the same Docker base as the project 
+            - image: node:lts-alpine
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+            - run:
+                name: install dependencies
+                command: |
+                    # Install hadolint
+                    wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
+                    chmod +x hadolint
+            # run lint!
+            - run:
+                name: Linting docker file
+                command: |
+                    make lint 
+workflows:
+  default:
+    jobs:
+      - lint 
