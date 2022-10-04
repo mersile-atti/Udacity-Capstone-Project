@@ -6,6 +6,7 @@ pipeline {
     }
     environment {
         CI = 'true'
+        dockerHubCredentials = 'dockerHub'
     }
     stages {
         stage('Start pipleine') {
@@ -48,16 +49,19 @@ pipeline {
                 sh 'make lint'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build & Push to Dockerfile') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
-            
-            sh '''
-                docker build -t mersileatti/devopscapstone:$BUILD_ID .
-            '''
-            sh 'docker image ls'
+                script {
+                            echo "Build Docker Image"
+                            dockerImage = docker.build("mersilefils/devopscapstone:latest")
+                            echo "Push Docker Image"
+                            retry(2){
+                            docker.withRegistry('',dockerHubCredentials ) {
+                                dockerImage.push()
+                                 }
+                            }
+                        }
+                    }
                 }
-            }
-        }
     }
 }
