@@ -7,22 +7,6 @@ orbs:
   docker: circleci/docker@2.1.4
 
 jobs:
-    lint:
-        docker:
-            # Use the same Docker base as the project 
-          - image: circleci/node:13.8.0
-        steps:
-            - checkout
-            - run:
-                name: install dependencies
-                command: |
-                    # Install hadolint
-                    make install
-            # run lint!
-            - run:
-                name: Linting docker file
-                command: |
-                    make lint 
     build-frontend:
       docker:
         - image: circleci/node:13.8.0
@@ -54,18 +38,33 @@ jobs:
             command: |
               cd src/backend
               npm install
-              npm run build
               exit 0
         - save_cache:
             paths: [backend/node_modules]
             key: backend-build
+    lint:
+        docker:
+            # Use the same Docker base as the project 
+          - image: circleci/node:13.8.0
+        steps:
+            - checkout
+            - run:
+                name: install dependencies
+                command: |
+                    # Install hadolint
+                    make install
+            # run lint!
+            - run:
+                name: Linting docker file
+                command: |
+                    make lint 
  
 workflows:
   default:
     jobs:
+      - build-frontend
+      - build-backend
       - docker/hadolint:
           dockerfiles: './Dockerfile'
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io,my-company.com:5000'
-      - build-frontend
-      - build-backend
