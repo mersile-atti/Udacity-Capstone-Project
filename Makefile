@@ -22,7 +22,8 @@ build:
 lint:
 	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
 	# This is linter for Dockerfiles
-	hadolint Dockerfile
+	lint:
+	hadolint --ignore DL3042 --ignore DL3013 Dockerfile
 
 
 
