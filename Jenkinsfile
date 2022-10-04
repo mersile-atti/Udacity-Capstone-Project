@@ -45,7 +45,6 @@ pipeline {
             steps {
                 dir('./src') {
                 sh "chmod +x -R ${env.WORKSPACE}"
-                sh 'npm install'
                 sh './jenkins/scripts/test.sh'
                 }
             }
