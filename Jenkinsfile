@@ -44,11 +44,9 @@ pipeline {
         stage('Linting') {
             steps {
                 echo "Linting Docker File"
-                retry(2){
-                    sh 'wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
-                                chmod +x hadolint'
-                    sh 'make lint'
-                 }
+                sh 'wget -O hadolint https://github.com/hadolint/hadolint/releases/download/v1.17.5/hadolint-Linux-x86_64 &&\
+                            chmod +x hadolint'
+                sh 'make lint'
             }
         }
     }
