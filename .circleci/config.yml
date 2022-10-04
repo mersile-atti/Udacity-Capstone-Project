@@ -27,7 +27,7 @@ jobs:
                 command: |
                     make lint 
 workflows:
-  lint:
+  default:
     jobs:
       - docker/hadolint:
           dockerfiles: './Dockerfile'
