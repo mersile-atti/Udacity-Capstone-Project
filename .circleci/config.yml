@@ -58,7 +58,7 @@ jobs:
         - save_cache:
             paths: [backend/node_modules]
             key: backend-build
-    build-&-upload-docker-image:
+    build-and-upload-docker-image:
       docker:
             # Use the same Docker base as the project 
         - image: docker:17.05.0-ce-git
@@ -90,4 +90,4 @@ workflows:
           trusted-registries: 'docker.io,my-company.com:5000'
       - build-frontend
       - build-backend
-      - build-&-upload-docker-image
+      - build-and-upload-docker-image
