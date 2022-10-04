@@ -12,10 +12,7 @@ jobs:
     lint:
         docker:
             # Use the same Docker base as the project 
-            - image: node:lts-alpine
-
-        working_directory: ~/repo
-
+          - image: circleci/node:13.8.0
         steps:
             - checkout
             - run:
