@@ -44,7 +44,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('./src') {
-                sh "npm install
+                sh 'npm install'
                 sh 'npm test'
                 }
             }
