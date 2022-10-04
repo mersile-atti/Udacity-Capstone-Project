@@ -1,32 +1,19 @@
-# Dockerfile.jenkinsAgent
-FROM debian:stretch-backports
-# Install Docker in the image, which adds a docker group
-RUN apt-get -y update && \
- apt-get -y install \
-   apt-transport-https \
-   ca-certificates \
-   curl \
-   gnupg \
-   lsb-release \
-   software-properties-common
+# Official jenkins image
+FROM jenkins/jenkins:lts
+# Swith to root to be able to install Docker and modify permissions
+USER root
+RUN apt-get update
+# Install docker
+RUN curl -sSL https://get.docker.com/ | sh
+# Add jenkins user to docker group
+RUN usermod -a -G docker jenkins
+# Switch back to default user
+USER jenkins
 
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-RUN add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"
-
-RUN apt-get -y update && \
- apt-get -y install \
-   docker-ce \
-   docker-ce-cli \
-   containerd.io
-
-# Setup users and groups
-RUN groupadd -g ${JENKINSGID} jenkins
-RUN groupmod -g ${DOCKERGID} docker
-RUN useradd -c "Jenkins user" -g ${JENKINSGID} -G ${DOCKERGID} -M -N -u ${JENKINSUID} jenkins
-
+# Bild the image:
+# sudo docker build -t yourusername/imagename .
+# Run the image and mount with the followin bind mount option:
+# sudo docker run --name imagename -d -p8080:8080 -v /var/run/docker.sock:/var/run/docker.sock yourusername/imagename
 
 FROM node:lts-alpine
 WORKDIR /usr/src/app
