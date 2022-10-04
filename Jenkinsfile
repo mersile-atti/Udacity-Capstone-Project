@@ -43,8 +43,10 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh './jenkins/scripts/test.sh'
+                dir('./src') {
+                sh "npm install
+                sh 'npm test'
+                }
             }
         }
         stage('Linting') {
