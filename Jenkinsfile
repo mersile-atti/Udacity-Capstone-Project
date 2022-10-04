@@ -7,7 +7,7 @@ pipeline {
     environment {
         CI = 'true'
         registry = 'mersileatti/devopscapstone'
-        dockerHubCredentials = 'dockerHub'
+        dockerHubCredentials = 'dockerhub'
         dockerImage = ''
     }
     stages {
