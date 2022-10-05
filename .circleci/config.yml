@@ -110,7 +110,7 @@ jobs:
                   --template-file eks-cluster.yml \
                   --tags project=Capstone-project \
                   --stack-name Capstone-cluster-${CIRCLE_WORKFLOW_ID:0:7} \
-                  --parameter-overrides eks-cluster-params.json \
+                  --parameter-overrides file://eks-cluster-params.json \
                   --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"          
         - run:
             name: Create group node for eks
@@ -121,7 +121,7 @@ jobs:
                   --template-file eks-node-groupe.yml \
                   --tags project=Capstone-project \
                   --stack-name Capstone-groupe-Node-${CIRCLE_WORKFLOW_ID:0:7} \
-                  --parameter-overrides eks-groupe-nodes-params.json \
+                  --parameter-overrides file://eks-groupe-nodes-params.json \
                   --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" 
         - destroy-environment:
             workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
