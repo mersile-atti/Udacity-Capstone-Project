@@ -5,10 +5,10 @@
 	},
     {
 		"ParameterKey": "EKSIAMNodeGroupRoleName",
-		"ParameterValue": "UdacityFinalProject"
+		"ParameterValue": "devops-final-project-node-role"
 	},
 	{
 		"ParameterKey": "EKSClusterName",
-		"ParameterValue": "UdacityFinalProject"
+		"ParameterValue": "devops-final-project"
 	}
 ]
