@@ -97,7 +97,7 @@ jobs:
               docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
     deploy_infrastructure:
       docker:
-        - image: amazon/aws-cli
+        - image: amazon/aws-cli  
       steps:
         - checkout
         - run:
