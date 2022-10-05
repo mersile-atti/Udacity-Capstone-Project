@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  aws-cli: circleci/aws-cli@2.0.3
   aws-eks: circleci/aws-eks@1.1.0
   kubernetes: circleci/kubernetes@1.3.0
   docker: circleci/docker@2.1.4
@@ -94,11 +95,11 @@ jobs:
               docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
               docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
               docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
-    deploy_infrastructure:
+    deploy-infrastructure:
       docker:
-        - image: amazon/aws-cli  
+        - image: amazon/aws-cli
       steps:
-        - checkout
+      - checkout
         - run:
             name: Install tar utility
             command: |
@@ -137,3 +138,4 @@ workflows:
       - build-and-upload-docker-image
       - deploy_infrastructure:
           requires: [build-and-upload-docker-image]
+      
