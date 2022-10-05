@@ -1,0 +1,51 @@
+Description: Udacity devops final project
+
+Parameters:
+  EnvironmentName:
+        Description: An environment name that will be prefixed to resource names
+        Type: String
+  
+  EKSClusterName:
+        Description: The desired name of your AWS EKS Cluster.
+        Type: String
+  
+  EKSIAMNodeGroupRoleName:
+        Description: The desired role of node group in AWS EKS Cluster.
+        Type: String
+
+Resources:
+
+  EKSIAMNodeGroupRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      RoleName: !Ref EKSIAMNodeGroupRoleName
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+      Path: /
+  
+  EKSNodegroup:
+    Type: 'AWS::EKS::Nodegroup'
+    Properties:
+      ClusterName: !Ref EKSClusterName
+      NodeRole: !GetAtt EKSIAMNodeGroupRole.Arn
+      ScalingConfig:
+        MinSize: 2
+        DesiredSize: 2
+        MaxSize: 2
+      Labels:
+        Key1: Value1
+      Subnets:
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
+        - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
+    DependsOn: [EKSIAMNodeGroupRole]

@@ -1,0 +1,14 @@
+[
+    {
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "UdacityFinalProject"
+	},
+    {
+		"ParameterKey": "EKSIAMNodeGroupRoleName",
+		"ParameterValue": "Udacity Capstone Project-node-role"
+	},
+	{
+		"ParameterKey": "EKSClusterName",
+		"ParameterValue": "udacity-devops-project-final"
+	}
+]
