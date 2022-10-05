@@ -136,6 +136,6 @@ workflows:
       - build-frontend
       - build-backend
       - build-and-upload-docker-image
-      - deploy_infrastructure:
+      - deploy-infrastructure:
           requires: [build-and-upload-docker-image]
       
