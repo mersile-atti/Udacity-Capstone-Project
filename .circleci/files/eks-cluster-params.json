@@ -25,10 +25,10 @@
 	},
     {
 		"ParameterKey": "EKSClusterName",
-		"ParameterValue": "Udacity Capstone Project"
+		"ParameterValue": "UdacityFinalProject"
 	},
     {
 		"ParameterKey": "EKSIAMRoleName",
-		"ParameterValue": "Udacity Capstone Project"
+		"ParameterValue": "UdacityFinalProject"
 	}
 ]
