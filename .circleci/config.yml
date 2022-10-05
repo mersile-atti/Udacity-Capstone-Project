@@ -97,9 +97,10 @@ jobs:
               docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
     deploy-infrastructure:
       docker:
-        - image: amazon/aws-cli
+        - image: cimg/aws:2022.09
       steps:
         - checkout
+        - run: aws --version
         - run:
             name: Install tar utility
             command: |
