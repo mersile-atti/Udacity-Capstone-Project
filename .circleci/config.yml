@@ -102,10 +102,6 @@ jobs:
         - checkout
         - run: aws --version
         - run:
-            name: Install tar utility
-            command: |
-              yum install -y tar gzip
-        - run:
             name: "Create eks cluster"
             no_output_timeout: 30m
             command: |
