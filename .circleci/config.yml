@@ -130,11 +130,7 @@ jobs:
         - image: cimg/aws:2022.09
       steps:
         - checkout
-        - run:
-            name: Install kubectl
-            command: |
-              curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-              install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        - kubernetes/install-kubectl
         - run:
             name: Config kubectl connect to aws
             command: |
