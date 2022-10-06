@@ -19,7 +19,6 @@ COPY . package*.json /app/
 COPY . .
 RUN npm install
 # Copies the entire source code into "/server"
-COPY . /server
 
 # Specifies the port the node app will be running on
 EXPOSE 5000
