@@ -134,7 +134,7 @@ jobs:
         - run:
             name: Config kubectl connect to aws
             command: |
-              aws eks update-kubeconfig --region us-east-1  --name Capstone-cluster-${CIRCLE_WORKFLOW_ID:0:7}
+              aws eks update-kubeconfig --region us-east-1  --name devops-final-project
         - run:
             name: Create deployment
             command: |
