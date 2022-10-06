@@ -93,7 +93,7 @@ jobs:
             command: |
               echo "Docker ID and Image: $DOCKER_IMAGE_NAME"
               docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
-              docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
+              docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:${CIRCLE_WORKFLOW_ID:0:7}
               docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
     deploy-infrastructure:
       docker:
@@ -125,6 +125,44 @@ jobs:
                   --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM" 
         - destroy-environment:
             workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+    deploy-app:
+      docker:
+        - image: cimg/aws:2022.09
+      steps:
+        - checkout
+        - run:
+            name: Install kubectl
+            command: |
+              curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+              install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        - run:
+            name: Config kubectl connect to aws
+            command: |
+              aws eks update-kubeconfig --region us-east-1  --name Capstone-cluster-${CIRCLE_WORKFLOW_ID:0:7}
+        - run:
+            name: Create deployment
+            command: |
+              kubectl create deploy udacity-${CIRCLE_WORKFLOW_ID:0:7} --image=$DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:${CIRCLE_WORKFLOW_ID:0:7}
+        - run:
+            name: Expose deployment
+            command: |
+              kubectl expose deployment udacity-${CIRCLE_WORKFLOW_ID:0:7} --type=LoadBalancer --name=publicapp-${CIRCLE_WORKFLOW_ID:0:7} --port=80
+              sleep 1m
+        - run:
+            name: store app endpoint and old
+            command: |
+              cd .circleci/files
+              kubectl get services
+              api=$(kubectl get services publicapp-${CIRCLE_WORKFLOW_ID:0:7} --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+              echo $api >> app-endpoint.txt
+              cat app-endpoint.txt
+        - persist_to_workspace:
+            root: ~/
+            paths:
+              - project/.circleci/files/app-endpoint.txt
+        - destroy-environment:
+            workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
+
 workflows:
   default:
     jobs:
@@ -137,4 +175,5 @@ workflows:
       - build-and-upload-docker-image
       - deploy-infrastructure:
           requires: [build-and-upload-docker-image]
-      
+      - deploy-app:
+          requires: [deploy-infrastructure]
