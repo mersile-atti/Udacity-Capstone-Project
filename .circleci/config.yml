@@ -69,7 +69,6 @@ jobs:
             username: $DOCKERHUB_USERNAME
             password: $DOCKERHUB_PASSWORD  # or project environment variable reference
       steps:
-        - checkout
         - run:
             name: Create a cluster
             command: |
