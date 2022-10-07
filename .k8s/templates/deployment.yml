@@ -18,7 +18,7 @@ spec:
         image: mersileatti/devopscapstone:stable
         imagePullPolicy: Always
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
   strategy:
     type: RollingUpdate
     rollingUpdate:

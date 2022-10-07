@@ -21,7 +21,7 @@ RUN npm install
 # Copies the entire source code into "/server"
 
 # Specifies the port the node app will be running on
-EXPOSE 5000
+EXPOSE 8080
 
 # Runs "node server.js" after the above step is completed
 CMD ["npm", "run", "server"]
