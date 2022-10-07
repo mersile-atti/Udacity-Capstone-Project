@@ -70,7 +70,9 @@ jobs:
         - run:
             name: Create a cluster
             command: |
-              eksctl create cluster \
+              aws eks create-cluster \
+                --region us-east-1 \
+                --name mern-app \
                 --kubeconfig=cloudformation/eks-cluster.yml
     deploy:
       docker:
