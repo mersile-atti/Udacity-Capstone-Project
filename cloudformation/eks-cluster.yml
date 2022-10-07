@@ -1,0 +1,18 @@
+# ClusterConfig object for gpt app:
+---
+eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mern-app
+  region: us-east-1
+
+nodeGroups:
+  - name: mern-app-worker-nodes
+    instanceType: t2.medium
+    minSize: 1
+    maxSize: 5
+    desiredCapacity: 3
+    volumeSize: 20
+    ssh:
+      publicKeyName: capstone_project

@@ -61,7 +61,17 @@ jobs:
               docker login -u="$DOCKERHUB_USERNAME" -p="$DOCKERHUB_PASSWORD"
               docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
               docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
-    
+
+    create-infrastructure:
+      docker:
+        - image: cimg/aws:2022.9
+      steps:
+        - checkout
+        - run:
+            name: Create a cluster
+            command: |
+              eksctl create cluster \
+                --kubeconfig=cloudformation/eks-cluster.yml
     deploy:
       docker:
         - image: cimg/aws:2022.09
@@ -69,7 +79,7 @@ jobs:
         - checkout
         - kubernetes/install-kubectl
         - aws-eks/update-kubeconfig-with-authenticator:
-            cluster-name: eksctl-devops
+            cluster-name: mern-app
         - kubernetes/create-or-update-resource:
             get-rollout-status: true
             resource-file-path: .k8s/templates/blue-deployment.yml
@@ -84,5 +94,7 @@ workflows:
           ignore-rules: 'DL4005,DL3008'
           trusted-registries: 'docker.io,my-company.com:5000'
       - build-and-upload-docker-image
-      - deploy:
+      - create-infrastructure:
           requires: [build-and-upload-docker-image]
+      - deploy:
+          requires: [create-infrastructure]
