@@ -6,20 +6,6 @@ orbs:
   kubernetes: circleci/kubernetes@1.3.0
   docker: circleci/docker@2.1.4
 
-commands:
-  destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      workflow-id:
-        type: string
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail
-          command: |
-            echo "Destroying environment: << parameters.workflow-id >>"
-              aws cloudformation delete-stack --stack-name Capstone-cluster-<<parameters.workflow-id>>
-              aws cloudformation delete-stack --stack-name Capstone-groupe-Node-<<parameters.workflow-id>>
 
 jobs:
     lint:
