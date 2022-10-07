@@ -1,6 +1,6 @@
 # ClusterConfig object for gpt app:
 ---
-eksctl.io/v1alpha5
+apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
