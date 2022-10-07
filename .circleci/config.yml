@@ -64,7 +64,10 @@ jobs:
 
     create-infrastructure:
       docker:
-        - image: cimg/aws:2022.9
+        - image: $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
+          auth:
+            username: $DOCKERHUB_USERNAME
+            password: $DOCKERHUB_PASSWORD  # or project environment variable reference
       steps:
         - checkout
         - run:
