@@ -69,7 +69,7 @@ jobs:
         - checkout
         - kubernetes/install-kubectl
         - aws-eks/update-kubeconfig-with-authenticator:
-            cluster-name: eksctl-eksctl-devops-cluster
+            cluster-name: eksctl-devops
         - kubernetes/create-or-update-resource:
             get-rollout-status: true
             resource-file-path: .k8s/templates/blue-deployment.yml
