@@ -71,7 +71,7 @@ DockerHub: [mern-app](https://hub.docker.com/repository/docker/mersileatti/mern-
 ```sh
 kubectl get svc,po,deploy
 ```
-![4-Deployment.png](Screenshots/4-Dployment.png "4-Deployment.png")
+![4-Deployment.png](Screenshots/4-Deployment.png "4-Deployment.png")
 
 
 ## Running Web APP
