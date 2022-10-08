@@ -7,15 +7,15 @@ spec:
   selector:
     matchLabels:
       app: mern-app
-  minReadySeconds: 15
   template:
     metadata:
       labels:
         app: mern-app
+        role: rolling-update
     spec:
       containers:
       - name: mern-app
-        image: $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:stable
+        image: $DOCKERHUB_USERNAME/$DOCKER_IMAGE_NAME:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -31,7 +31,7 @@ metadata:
 spec:
   ports:
   - protocol: TCP
-    port: 8080
+    port: 80
     targetPort: 8080
   selector:
     app: mern-app
