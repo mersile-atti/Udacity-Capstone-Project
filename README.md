@@ -3,7 +3,8 @@
 
 This is the goalsetter app from the [Learn the MERN Stack](https://www.youtube.com/watch?v=-0exw-9YJBo) series on YouTube.
 
-##Overview
+## Overview
+
 In this project I apply the skills and knowledge which were developed throughout the Cloud DevOps Nanodegree program. These include:
 
 Working in AWS
@@ -70,7 +71,9 @@ DockerHub: [mern-app](https://hub.docker.com/repository/docker/mersileatti/mern-
 ```sh
 kubectl get svc,po,deploy
 ```
+![4-Deployment.png](Screenshots/4-Dployment.png "4-Deployment.png")
+
 
 ## Running Web APP
 
-![06-ELB_Access.png](screenshots/06-ELB_Access.png "06-ELB_Access.png")
+![06-ELB_Access.png](Screenshots/06-ELB_Access.png "06-ELB_Access.png")
